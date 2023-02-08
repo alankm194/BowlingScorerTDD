@@ -77,6 +77,46 @@ public class BowlingScorerTest {
         assertEquals(28, actualScore);
     }
 
+    @Test
+    public void whenBowlerScore9SparesAnd1InNextShot_ThenReturn100() {
+        BowlingScorer scorer = new BowlingScorer();
+        String testCase = "1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/ 1-";
+        int actualScore = scorer.calculateScore(testCase);
+        assertEquals(100, actualScore);
+    }
+
+
+    @Test
+    public void WhenBowlerScore1StrikeAndAllMisses_ThenReturn10() {
+        BowlingScorer scorer = new BowlingScorer();
+        String testCase = "X -- -- -- -- -- -- -- -- --";
+        int actualScore = scorer.calculateScore(testCase);
+        assertEquals(10, actualScore);
+    }
+
+    @Test
+    public void WhenBowlerScore1StrikeAnd2InTheNextFrame_ThenReturn14() {
+        BowlingScorer scorer = new BowlingScorer();
+        String testCase = "X 11 -- -- -- -- -- -- -- --";
+        int actualScore = scorer.calculateScore(testCase);
+        assertEquals(14, actualScore);
+    }
+
+    @Test
+    public void WhenBowlerScore2StrikeAndAllMisses_ThenReturn20() {
+        BowlingScorer scorer = new BowlingScorer();
+        String testCase = "X X -- -- -- -- -- -- -- --";
+        int actualScore = scorer.calculateScore(testCase);
+        assertEquals(30, actualScore);
+    }
+
+    @Test
+    public void WhenBowlerScoresAllStrikes_ThenReturn300() {
+        BowlingScorer scorer = new BowlingScorer();
+        String testCase = "X X X X X X X X X X X X";
+        int actualScore = scorer.calculateScore(testCase);
+        assertEquals(300, actualScore);
+    }
 
     /*
     problem analysis
