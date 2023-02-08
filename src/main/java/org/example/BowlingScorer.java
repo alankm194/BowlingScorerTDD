@@ -22,9 +22,7 @@ public class BowlingScorer {
                     totalScore += STRIKE_PAIR_SCORE;
                     if ((i + 1) < scoreArray.length ) {
                         var futureFrame = scoreArray[i+1].toCharArray();
-                        if (Character.isDigit(futureFrame[0])) {
-                            totalScore += Character.getNumericValue(futureFrame[0]);
-                        }
+                        totalScore += addIndividualRollToScore(futureFrame[0]);
                     }
                 } else {
                     totalScore += addNonSpareFrameToScore(scoreCharArray);
@@ -34,6 +32,7 @@ public class BowlingScorer {
         return totalScore;
     }
 
+
     private int CalculateStrikeScore(String futureFrame1, String futureFrame2) {
         var score = STRIKE_PAIR_SCORE;
         if (futureFrame1.equals(STRIKE)) {
@@ -41,9 +40,7 @@ public class BowlingScorer {
             if (futureFrame2.equals(STRIKE)) {
                 score += STRIKE_PAIR_SCORE;
             } else {
-                if (Character.isDigit(futureFrame2.toCharArray()[0])) {
-                    score += Character.getNumericValue(futureFrame2.toCharArray()[0]);
-                }
+                score += addIndividualRollToScore(futureFrame2.toCharArray()[0]);
             }
         } else {
             score += addNonSpareFrameToScore(futureFrame1.toCharArray());
@@ -54,10 +51,15 @@ public class BowlingScorer {
     private int addNonSpareFrameToScore(char[] scorePairArray) {
         int frameTotal = 0;
         for (char charScore : scorePairArray) {
-            if (Character.isDigit(charScore)) {
-                frameTotal += Character.getNumericValue(charScore);
-            }
+            frameTotal += addIndividualRollToScore(charScore);
         }
         return frameTotal;
+    }
+
+    private int addIndividualRollToScore(char roll) {
+        if (Character.isDigit(roll)) {
+            return Character.getNumericValue(roll);
+        }
+        return 0;
     }
 }
