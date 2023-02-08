@@ -7,9 +7,16 @@ public class BowlingScorer {
         var scoreArray = input.split(" ");
         var totalScore = 0;
         for (String scorePair: scoreArray) {
-            for (char individualScore: scorePair.toCharArray()) {
-                if (Character.isDigit(individualScore)) {
-                    totalScore += Character.getNumericValue(individualScore);
+            var pairCharArray = scorePair.toCharArray();
+            if (pairCharArray.length == 2 ) {
+                if ('/' == pairCharArray[1]) {
+                    totalScore += 10;
+                } else {
+                    for (char charScore: pairCharArray) {
+                        if (Character.isDigit(charScore)) {
+                            totalScore += Character.getNumericValue(charScore);
+                        }
+                    }
                 }
             }
         }

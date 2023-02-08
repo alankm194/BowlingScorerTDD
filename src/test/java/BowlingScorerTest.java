@@ -45,6 +45,23 @@ public class BowlingScorerTest {
         assertEquals(20, actualScore);
     }
 
+    @Test
+    public void whenBowlerScoresTotal60InAllFrames_ThenReturn60() {
+        BowlingScorer scorer = new BowlingScorer();
+        String testCase = "12 34 45 53 22 14 63 52 13 22";
+        int actualScore = scorer.calculateScore(testCase);
+        assertEquals(60, actualScore);
+    }
+
+    @Test
+    public void whenBowlerScorePairInFirstFrameAndMissesEveryShotAfter_ThenReturn10() {
+        BowlingScorer scorer = new BowlingScorer();
+        String testCase = "1/ -- -- -- -- -- -- -- -- --";
+        int actualScore = scorer.calculateScore(testCase);
+        assertEquals(10, actualScore);
+    }
+
+
     /*
     problem analysis
         - we wont be validating input
