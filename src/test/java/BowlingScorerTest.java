@@ -21,7 +21,29 @@ public class BowlingScorerTest {
         assertEquals(1, actualScore);
     }
 
+    @Test
+    public void whenBowlerScores1InFirstRollAnd4InSecondRollInFirstFrame_ThenReturn5() {
+        BowlingScorer scorer = new BowlingScorer();
+        String testCase = "14 -- -- -- -- -- -- -- -- --";
+        int actualScore = scorer.calculateScore(testCase);
+        assertEquals(5, actualScore);
+    }
 
+    @Test
+    public void whenBowlerScores4InFirstRollAnd1InSecondRollInFirstFrame_ThenReturn5() {
+        BowlingScorer scorer = new BowlingScorer();
+        String testCase = "41 -- -- -- -- -- -- -- -- --";
+        int actualScore = scorer.calculateScore(testCase);
+        assertEquals(5, actualScore);
+    }
+
+    @Test
+    public void whenBowlerScoresAll1sInAllRolls_ThenReturn20() {
+        BowlingScorer scorer = new BowlingScorer();
+        String testCase = "11 11 11 11 11 11 11 11 11 11";
+        int actualScore = scorer.calculateScore(testCase);
+        assertEquals(20, actualScore);
+    }
 
     /*
     problem analysis
