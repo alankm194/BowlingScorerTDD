@@ -54,11 +54,27 @@ public class BowlingScorerTest {
     }
 
     @Test
-    public void whenBowlerScorePairInFirstFrameAndMissesEveryShotAfter_ThenReturn10() {
+    public void whenBowlerScoreSpareInFirstFrameAndMissesEveryShotAfter_ThenReturn10() {
         BowlingScorer scorer = new BowlingScorer();
         String testCase = "1/ -- -- -- -- -- -- -- -- --";
         int actualScore = scorer.calculateScore(testCase);
         assertEquals(10, actualScore);
+    }
+
+    @Test
+    public void whenBowlerScoreSpareInFirstFrameAndMissesNextShotAndScoresInAnotherFrame_ThenReturn16() {
+        BowlingScorer scorer = new BowlingScorer();
+        String testCase = "1/ -- 6- -- -- -- -- -- -- --";
+        int actualScore = scorer.calculateScore(testCase);
+        assertEquals(16, actualScore);
+    }
+
+    @Test
+    public void whenBowlerScoreSpareInFirstFrameAndScores9InNextShot_ThenReturn28() {
+        BowlingScorer scorer = new BowlingScorer();
+        String testCase = "1/ 9- -- -- -- -- -- -- -- --";
+        int actualScore = scorer.calculateScore(testCase);
+        assertEquals(28, actualScore);
     }
 
 
