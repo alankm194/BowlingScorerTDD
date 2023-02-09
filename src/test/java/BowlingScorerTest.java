@@ -48,13 +48,10 @@ public class BowlingScorerTest {
         assertEquals(expectedScore, scorer.calculateScore(input));
     }
 
-
-
-    @Test
-    public void whenBowlerScoresTotal60InAllFrames_ThenReturn60() {
-        String testCase = "12 34 45 53 22 14 63 52 13 22";
-        int actualScore = scorer.calculateScore(testCase);
-        assertEquals(60, actualScore);
+    @ParameterizedTest
+    @CsvFileSource(resources = "gameWithOnlyStrikes.csv", numLinesToSkip = 1)
+    public void whenBowlerScoreStrikes_theReturnCorrectScore(String input, int expectedScore) {
+        assertEquals(expectedScore, scorer.calculateScore(input));
     }
 
     @Test
@@ -86,7 +83,7 @@ public class BowlingScorerTest {
     }
 
     @Test
-    public void whenBowlerScoresSpareOntenthFrame_thenGetCorrectScoreWithBonusRoll() {
+    public void whenBowlerScoresSpareOnTenthFrame_thenGetCorrectScoreWithBonusRoll() {
         String testCase = "1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/1";
         int actualScore = scorer.calculateScore(testCase);
         assertEquals(110, actualScore);
@@ -114,12 +111,6 @@ public class BowlingScorerTest {
         assertEquals(30, actualScore);
     }
 
-    @Test
-    public void WhenBowlerScoresAllStrikes_ThenReturn300() {
-        String testCase = "X X X X X X X X X X X X";
-        int actualScore = scorer.calculateScore(testCase);
-        assertEquals(300, actualScore);
-    }
 
     @Test
     public void WhenBowlerScoresStrikesInLastThreeFrames_ThenReturn30() {
