@@ -14,18 +14,17 @@ public class BowlingScorer {
     public int calculateScore(String input) {
         ListIterator<String> scoreIterator = Arrays.asList(input.split(" ")).listIterator();
         var totalScore = 0;
-
         while (scoreIterator.hasNext() && scoreIterator.nextIndex() < MAX_FRAME_COUNT) {
             var scoreCharArray = scoreIterator.next().toCharArray();
             if (scoreCharArray.length == 1) {
-                if (scoreCharArray[0] == STRIKE.charAt(0)) {
+                if (STRIKE.charAt(0) == scoreCharArray[0]) {
                     totalScore += CalculateStrikeScore(scoreIterator);
                 }
             } else {
                 if (SPARE == scoreCharArray[1]) {
                     totalScore += calculateSpareScore(scoreIterator, scoreCharArray);
                 } else {
-                    totalScore += addNonSpareFrameToScore(scoreCharArray);
+                    totalScore += calculateNonStrikeNonSpareScore(scoreCharArray);
                 }
             }
         }
@@ -61,7 +60,7 @@ public class BowlingScorer {
                     iterator.previous();
                 }
             } else {
-                score += addNonSpareFrameToScore(futureFrame1.toCharArray());
+                score += calculateNonStrikeNonSpareScore(futureFrame1.toCharArray());
             }
             iterator.previous();
         }
@@ -69,7 +68,7 @@ public class BowlingScorer {
     }
 
 
-    private int addNonSpareFrameToScore(char[] scorePairArray) {
+    private int calculateNonStrikeNonSpareScore(char[] scorePairArray) {
         int frameTotal = 0;
         for (char charScore : scorePairArray) {
             frameTotal += addIndividualRollToScore(charScore);
