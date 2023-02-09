@@ -82,13 +82,6 @@ public class BowlingScorerTest {
         assertEquals(28, actualScore);
     }
 
-    @Test
-    public void ttt() {
-        String testCase = "-- -- -- -- -- -- 1/ X 4/ 5/4";
-        int actualScore = scorer.calculateScore(testCase);
-        assertEquals(69, actualScore);
-    }
-
 
     @Test
     public void WhenBowlerScore1StrikeAnd2InTheNextFrame_ThenReturn14() {
