@@ -118,6 +118,14 @@ public class BowlingScorerTest {
         assertEquals(300, actualScore);
     }
 
+
+    @Test
+    public void WhenBowlerScoresStrikeAt10thFrame_ThenReturn300() {
+        BowlingScorer scorer = new BowlingScorer();
+        String testCase = "-- -- -- -- -- -- -- -- -- X 11";
+        int actualScore = scorer.calculateScore(testCase);
+        assertEquals(12, actualScore);
+    }
     /*
     problem analysis
         - we wont be validating input

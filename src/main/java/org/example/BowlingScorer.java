@@ -10,11 +10,16 @@ public class BowlingScorer {
     public int calculateScore(String input) {
         var scoreArray = input.split(" ");
         var totalScore = 0;
+
         for (int i = 0; i < MAX_FRAME_COUNT; i++) {
             var scoreCharArray = scoreArray[i].toCharArray();
             if (scoreCharArray.length == 1) {
                 if (scoreCharArray[0] == STRIKE.charAt(0)) {
-                    totalScore += CalculateStrikeScore(scoreArray[i + 1], scoreArray[i + 2]);
+                    if (i == MAX_FRAME_COUNT - 1 && scoreArray.length == 11) {
+                        totalScore += CalculateStrikeScore(scoreArray[i + 1]);
+                    } else {
+                        totalScore += CalculateStrikeScore(scoreArray[i + 1], scoreArray[i + 2]);
+                    }
                 }
             }
             else {
@@ -46,6 +51,10 @@ public class BowlingScorer {
             score += addNonSpareFrameToScore(futureFrame1.toCharArray());
         }
         return score;
+    }
+
+    private int CalculateStrikeScore(String futureFrame1) {
+        return STRIKE_PAIR_SCORE + addNonSpareFrameToScore(futureFrame1.toCharArray());
     }
 
     private int addNonSpareFrameToScore(char[] scorePairArray) {
