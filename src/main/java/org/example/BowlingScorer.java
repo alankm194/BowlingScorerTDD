@@ -60,11 +60,18 @@ public class BowlingScorer {
                     iterator.previous();
                 }
             } else {
-                score += calculateNonStrikeNonSpareScore(futureFrame1.toCharArray());
+                score += calculateFutureFrameScore(futureFrame1.toCharArray());
             }
             iterator.previous();
         }
         return score;
+    }
+
+    private int calculateFutureFrameScore(char[] scorePairArray) {
+        if (scorePairArray[1] == SPARE) {
+            return STRIKE_PAIR_SCORE;
+        }
+        return calculateNonStrikeNonSpareScore(scorePairArray);
     }
 
 
@@ -77,6 +84,9 @@ public class BowlingScorer {
     }
 
     private int addIndividualRollToScore(char roll) {
+        if(roll == STRIKE.charAt(0)) {
+            return STRIKE_PAIR_SCORE;
+        }
         if (Character.isDigit(roll)) {
             return Character.getNumericValue(roll);
         }

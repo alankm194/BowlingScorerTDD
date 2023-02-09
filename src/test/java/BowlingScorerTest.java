@@ -54,6 +54,13 @@ public class BowlingScorerTest {
         assertEquals(expectedScore, scorer.calculateScore(input));
     }
 
+
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "gameMixtureOfStrikesSparesAndNormalFrames.csv", numLinesToSkip = 1)
+    public void GivenGameWithVariablesScores_theReturnCorrectScore(String input, int expectedScore) {
+        assertEquals(expectedScore, scorer.calculateScore(input));
+    }
     @Test
     public void whenBowlerScoreSpareInFirstFrameAndMissesEveryShotAfter_ThenReturn10() {
         String testCase = "1/ -- -- -- -- -- -- -- -- --";
@@ -76,26 +83,12 @@ public class BowlingScorerTest {
     }
 
     @Test
-    public void whenBowlerScore9SparesAnd1InNextShot_ThenReturn100() {
-        String testCase = "1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/ 1-";
+    public void ttt() {
+        String testCase = "-- -- -- -- -- -- 1/ X 4/ 5/4";
         int actualScore = scorer.calculateScore(testCase);
-        assertEquals(100, actualScore);
+        assertEquals(69, actualScore);
     }
 
-    @Test
-    public void whenBowlerScoresSpareOntenthFrame_thenGetCorrectScoreWithBonusRoll() {
-        String testCase = "1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/1";
-        int actualScore = scorer.calculateScore(testCase);
-        assertEquals(110, actualScore);
-    }
-
-
-    @Test
-    public void WhenBowlerScore1StrikeAndAllMisses_ThenReturn10() {
-        String testCase = "X -- -- -- -- -- -- -- -- --";
-        int actualScore = scorer.calculateScore(testCase);
-        assertEquals(10, actualScore);
-    }
 
     @Test
     public void WhenBowlerScore1StrikeAnd2InTheNextFrame_ThenReturn14() {
@@ -103,22 +96,6 @@ public class BowlingScorerTest {
         int actualScore = scorer.calculateScore(testCase);
         assertEquals(14, actualScore);
     }
-
-    @Test
-    public void WhenBowlerScore2StrikeAndAllMisses_ThenReturn20() {
-        String testCase = "X X -- -- -- -- -- -- -- --";
-        int actualScore = scorer.calculateScore(testCase);
-        assertEquals(30, actualScore);
-    }
-
-
-    @Test
-    public void WhenBowlerScoresStrikesInLastThreeFrames_ThenReturn30() {
-        String testCase = "-- -- -- -- -- -- -- -- -- X X X";
-        int actualScore = scorer.calculateScore(testCase);
-        assertEquals(30, actualScore);
-    }
-
 
     @Test
     public void WhenBowlerScoresStrikeAt10thFrame_ThenReturn12() {
