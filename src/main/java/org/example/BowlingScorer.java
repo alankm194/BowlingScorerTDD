@@ -23,22 +23,26 @@ public class BowlingScorer {
                 }
             } else {
                 if (SPARE == scoreCharArray[1]) {
-
-                    totalScore += STRIKE_PAIR_SCORE;
-                    if (scoreIterator.hasNext()) {
-                        var futureFrameFirstRoll = scoreIterator.next().toCharArray()[0];
-                        totalScore += addIndividualRollToScore(futureFrameFirstRoll);
-                        scoreIterator.previous();
-                    }
-                    if(scoreCharArray.length == 3) {
-                        totalScore += addIndividualRollToScore(scoreCharArray[2]);
-                    }
+                    totalScore += calculateSpareScore(scoreIterator, scoreCharArray);
                 } else {
                     totalScore += addNonSpareFrameToScore(scoreCharArray);
                 }
             }
         }
         return totalScore;
+    }
+
+    private int calculateSpareScore(ListIterator<String> iterator, char[] currentFrameCharArr) {
+        var score = STRIKE_PAIR_SCORE;
+        if (iterator.hasNext()) {
+            var futureFrameFirstRoll = iterator.next().toCharArray()[0];
+            score += addIndividualRollToScore(futureFrameFirstRoll);
+            iterator.previous();
+        }
+        if(currentFrameCharArr.length == 3) {
+            score += addIndividualRollToScore(currentFrameCharArr[2]);
+        }
+        return score;
     }
 
     private int CalculateStrikeScore(ListIterator<String> iterator) {
