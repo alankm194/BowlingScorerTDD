@@ -23,11 +23,15 @@ public class BowlingScorer {
                 }
             } else {
                 if (SPARE == scoreCharArray[1]) {
+
                     totalScore += STRIKE_PAIR_SCORE;
                     if (scoreIterator.hasNext()) {
                         var futureFrameFirstRoll = scoreIterator.next().toCharArray()[0];
                         totalScore += addIndividualRollToScore(futureFrameFirstRoll);
                         scoreIterator.previous();
+                    }
+                    if(scoreCharArray.length == 3) {
+                        totalScore += addIndividualRollToScore(scoreCharArray[2]);
                     }
                 } else {
                     totalScore += addNonSpareFrameToScore(scoreCharArray);

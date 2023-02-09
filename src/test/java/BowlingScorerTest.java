@@ -85,6 +85,13 @@ public class BowlingScorerTest {
         assertEquals(100, actualScore);
     }
 
+    @Test
+    public void whenBowlerScoresSpareOntenthFrame_thenGetCorrectScoreWithBonusRoll() {
+        String testCase = "1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/1";
+        int actualScore = scorer.calculateScore(testCase);
+        assertEquals(110, actualScore);
+    }
+
 
     @Test
     public void WhenBowlerScore1StrikeAndAllMisses_ThenReturn10() {
