@@ -1,4 +1,4 @@
-import org.example.BowlingScorer;
+import org.alan.BowlingScorer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,29 +21,8 @@ public class BowlingScorerTest {
         assertEquals(0, actualScore);
     }
 
-    @Test
-    public void whenBowlerScores1InFirstFrame_ThenReturn1() {
-        String testCase = "1- -- -- -- -- -- -- -- -- --";
-        int actualScore = scorer.calculateScore(testCase);
-        assertEquals(1, actualScore);
-    }
-
-    @Test
-    public void whenBowlerScores1InFirstRollAnd4InSecondRollInFirstFrame_ThenReturn5() {
-        String testCase = "14 -- -- -- -- -- -- -- -- --";
-        int actualScore = scorer.calculateScore(testCase);
-        assertEquals(5, actualScore);
-    }
-
-    @Test
-    public void whenBowlerScores4InFirstRollAnd1InSecondRollInFirstFrame_ThenReturn5() {
-        String testCase = "41 -- -- -- -- -- -- -- -- --";
-        int actualScore = scorer.calculateScore(testCase);
-        assertEquals(5, actualScore);
-    }
-
     @ParameterizedTest
-    @CsvFileSource(resources = "/gameWithNoStrikesAndSpares.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/gameWithAllHitsNoStrikesAndSpares.csv", numLinesToSkip = 1)
     public void whenBowlerScoresNoSpareAndNoStrikes_ThenReturnCorrectScore(String input, int expectedScore) {
         assertEquals(expectedScore, scorer.calculateScore(input));
     }
@@ -54,48 +33,12 @@ public class BowlingScorerTest {
         assertEquals(expectedScore, scorer.calculateScore(input));
     }
 
-
-
     @ParameterizedTest
     @CsvFileSource(resources = "gameMixtureOfStrikesSparesAndNormalFrames.csv", numLinesToSkip = 1)
     public void GivenGameWithVariablesScores_theReturnCorrectScore(String input, int expectedScore) {
         assertEquals(expectedScore, scorer.calculateScore(input));
     }
-    @Test
-    public void whenBowlerScoreSpareInFirstFrameAndMissesEveryShotAfter_ThenReturn10() {
-        String testCase = "1/ -- -- -- -- -- -- -- -- --";
-        int actualScore = scorer.calculateScore(testCase);
-        assertEquals(10, actualScore);
-    }
 
-    @Test
-    public void whenBowlerScoreSpareInFirstFrameAndMissesNextShotAndScoresInAnotherFrame_ThenReturn16() {
-        String testCase = "1/ -- 6- -- -- -- -- -- -- --";
-        int actualScore = scorer.calculateScore(testCase);
-        assertEquals(16, actualScore);
-    }
-
-    @Test
-    public void whenBowlerScoreSpareInFirstFrameAndScores9InNextShot_ThenReturn28() {
-        String testCase = "1/ 9- -- -- -- -- -- -- -- --";
-        int actualScore = scorer.calculateScore(testCase);
-        assertEquals(28, actualScore);
-    }
-
-
-    @Test
-    public void WhenBowlerScore1StrikeAnd2InTheNextFrame_ThenReturn14() {
-        String testCase = "X 11 -- -- -- -- -- -- -- --";
-        int actualScore = scorer.calculateScore(testCase);
-        assertEquals(14, actualScore);
-    }
-
-    @Test
-    public void WhenBowlerScoresStrikeAt10thFrame_ThenReturn12() {
-        String testCase = "-- -- -- -- -- -- -- -- -- X 11";
-        int actualScore = scorer.calculateScore(testCase);
-        assertEquals(12, actualScore);
-    }
     /*
     problem analysis
         - we wont be validating input
