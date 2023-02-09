@@ -114,6 +114,13 @@ public class BowlingScorerTest {
         assertEquals(300, actualScore);
     }
 
+    @Test
+    public void WhenBowlerScoresStrikesInLastThreeFrames_ThenReturn30() {
+        String testCase = "-- -- -- -- -- -- -- -- -- X X X";
+        int actualScore = scorer.calculateScore(testCase);
+        assertEquals(30, actualScore);
+    }
+
 
     @Test
     public void WhenBowlerScoresStrikeAt10thFrame_ThenReturn12() {

@@ -1,6 +1,9 @@
 package org.example;
 
 
+import java.util.Arrays;
+import java.util.ListIterator;
+
 public class BowlingScorer {
 
     private final static int MAX_FRAME_COUNT = 10;
@@ -9,26 +12,22 @@ public class BowlingScorer {
     private final static char SPARE = '/';
 
     public int calculateScore(String input) {
-        var scoreArray = input.split(" ");
+        ListIterator<String> scoreIterator = Arrays.asList(input.split(" ")).listIterator();
         var totalScore = 0;
 
-        for (int i = 0; i < MAX_FRAME_COUNT; i++) {
-            var scoreCharArray = scoreArray[i].toCharArray();
+        while (scoreIterator.hasNext() && scoreIterator.nextIndex() < MAX_FRAME_COUNT) {
+            var scoreCharArray = scoreIterator.next().toCharArray();
             if (scoreCharArray.length == 1) {
                 if (scoreCharArray[0] == STRIKE.charAt(0)) {
-                    if (i == MAX_FRAME_COUNT - 1 && scoreArray.length == 11) {
-                        totalScore += CalculateStrikeScore(scoreArray[i + 1]);
-                    } else {
-                        totalScore += CalculateStrikeScore(scoreArray[i + 1], scoreArray[i + 2]);
-                    }
+                    totalScore += CalculateStrikeScore(scoreIterator);
                 }
-            }
-            else {
+            } else {
                 if (SPARE == scoreCharArray[1]) {
                     totalScore += STRIKE_PAIR_SCORE;
-                    if ((i + 1) < scoreArray.length ) {
-                        var futureFrameFirstRoll = scoreArray[i+1].toCharArray()[0];
+                    if (scoreIterator.hasNext()) {
+                        var futureFrameFirstRoll = scoreIterator.next().toCharArray()[0];
                         totalScore += addIndividualRollToScore(futureFrameFirstRoll);
+                        scoreIterator.previous();
                     }
                 } else {
                     totalScore += addNonSpareFrameToScore(scoreCharArray);
@@ -38,25 +37,29 @@ public class BowlingScorer {
         return totalScore;
     }
 
-
-    private int CalculateStrikeScore(String futureFrame1, String futureFrame2) {
+    private int CalculateStrikeScore(ListIterator<String> iterator) {
         var score = STRIKE_PAIR_SCORE;
-        if (futureFrame1.equals(STRIKE)) {
-            score += STRIKE_PAIR_SCORE;
-            if (futureFrame2.equals(STRIKE)) {
+        if (iterator.hasNext()) {
+            var futureFrame1 = iterator.next();
+            if (futureFrame1.equals(STRIKE)) {
                 score += STRIKE_PAIR_SCORE;
+                if (iterator.hasNext()) {
+                    var futureFrame2 = iterator.next();
+                    if (futureFrame2.equals(STRIKE)) {
+                        score += STRIKE_PAIR_SCORE;
+                    } else {
+                        score += addIndividualRollToScore(futureFrame2.toCharArray()[0]);
+                    }
+                    iterator.previous();
+                }
             } else {
-                score += addIndividualRollToScore(futureFrame2.toCharArray()[0]);
+                score += addNonSpareFrameToScore(futureFrame1.toCharArray());
             }
-        } else {
-            score += addNonSpareFrameToScore(futureFrame1.toCharArray());
+            iterator.previous();
         }
         return score;
     }
 
-    private int CalculateStrikeScore(String futureFrame1) {
-        return STRIKE_PAIR_SCORE + addNonSpareFrameToScore(futureFrame1.toCharArray());
-    }
 
     private int addNonSpareFrameToScore(char[] scorePairArray) {
         int frameTotal = 0;
