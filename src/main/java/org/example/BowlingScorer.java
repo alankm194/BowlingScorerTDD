@@ -6,6 +6,7 @@ public class BowlingScorer {
     private final static int MAX_FRAME_COUNT = 10;
     private final static int STRIKE_PAIR_SCORE = 10;
     private final static String STRIKE = "X";
+    private final static char SPARE = '/';
 
     public int calculateScore(String input) {
         var scoreArray = input.split(" ");
@@ -23,11 +24,11 @@ public class BowlingScorer {
                 }
             }
             else {
-                if ('/' == scoreCharArray[1]) {
+                if (SPARE == scoreCharArray[1]) {
                     totalScore += STRIKE_PAIR_SCORE;
                     if ((i + 1) < scoreArray.length ) {
-                        var futureFrame = scoreArray[i+1].toCharArray();
-                        totalScore += addIndividualRollToScore(futureFrame[0]);
+                        var futureFrameFirstRoll = scoreArray[i+1].toCharArray()[0];
+                        totalScore += addIndividualRollToScore(futureFrameFirstRoll);
                     }
                 } else {
                     totalScore += addNonSpareFrameToScore(scoreCharArray);
