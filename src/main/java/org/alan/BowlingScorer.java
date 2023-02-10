@@ -37,8 +37,7 @@ public class BowlingScorer {
             var futureFrameFirstRoll = iterator.next().toCharArray()[0];
             score += addIndividualRollToScore(futureFrameFirstRoll);
             iterator.previous();
-        }
-        if(currentFrameCharArr.length == 3) {
+        } else if(currentFrameCharArr.length == 3) {
             score += addIndividualRollToScore(currentFrameCharArr[2]);
         }
         return score;
@@ -86,8 +85,7 @@ public class BowlingScorer {
     private int addIndividualRollToScore(char roll) {
         if(roll == STRIKE.charAt(0)) {
             return STRIKE_PAIR_SCORE;
-        }
-        if (Character.isDigit(roll)) {
+        } else if (Character.isDigit(roll)) {
             return Character.getNumericValue(roll);
         }
         return 0;
